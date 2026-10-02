@@ -1,0 +1,19 @@
+sequenceDiagram
+  participant O as Orchestrator
+  participant W as Worker session
+  participant I as Integration / test target
+  participant G as GitHub
+  O->>O: Contract, base SHA, ownership, acceptance
+  O->>W: Verified SSH + fresh bounded brief
+  W->>W: Implement and test in isolated checkout
+  Note over W: Close paid session on completion or dependency wait
+  W-->>O: Diff/bundle SHA + small receipt + original logs
+  O->>O: Review native/wrapper/outer exits and logs
+  O->>O: Verify exact host/process group absence and diff
+  alt More useful work is needed
+    O->>W: New session with contract + work delta + outcomes
+    W-->>O: Reviewed follow-up artifact and closure evidence
+  end
+  O->>I: Serial integration and authorized acceptance
+  I-->>O: Combined checks and truthful evidence labels
+  O->>G: Publish after required review and merge gate
