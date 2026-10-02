@@ -1,0 +1,21 @@
+flowchart TB
+  O[Mac orchestrator<br/>Plan · contracts · dispatch<br/>Review · integrate · publish]
+  W1[Mac worker 1<br/>1..N independent Codex CLI sessions<br/>Isolated checkouts + owned files]
+  W2[Mac worker 2<br/>1..N independent Codex CLI sessions<br/>Isolated checkouts + owned files]
+  W3[Linux ARM worker 3<br/>1..N independent Codex CLI sessions<br/>Isolated checkouts + owned files]
+  G[GitHub<br/>Reviewed project history<br/>Protected default branch]
+  T[Optional test targets<br/>VM · GPU · service · device<br/>Explicit owner and authorization]
+  O -->|Verified SSH + fresh brief| W1
+  O -->|Verified SSH + fresh brief| W2
+  O -->|Verified SSH + fresh brief| W3
+  W1 -->|Diff or bundle + original logs| O
+  W2 -->|Diff or bundle + original logs| O
+  W3 -->|Diff or bundle + original logs| O
+  O -->|Reviewed publication| G
+  O -->|Serial shared resource gate| T
+  classDef orchestrator fill:#e6eefc,stroke:#4261b9,color:#152444
+  classDef worker fill:#e7f6f3,stroke:#208c80,color:#153e39
+  classDef target fill:#f5effd,stroke:#8c68b3,color:#423050
+  class O orchestrator
+  class W1,W2,W3 worker
+  class G,T target

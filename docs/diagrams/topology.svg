@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="810" viewBox="0 0 1280 810" role="img" aria-labelledby="title desc">
+<title id="title">CodexTandem host topology</title>
+<desc id="desc">An instructed Mac orchestrator dispatches fresh bounded tasks over verified SSH to two Mac workers and one ARM Linux worker. The orchestrator reviews and publishes to GitHub and controls optional test targets through a serial gate.</desc>
+<rect width="1280" height="810" rx="20" fill="#f8faff"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#6f82a3" stroke-width="1.6" stroke-linejoin="round"/></marker></defs>
+<g font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+<text x="45" y="56" fill="#172644" font-size="32" font-weight="700" text-anchor="start">One orchestrator. Independent workers.</text>
+<text x="45" y="87" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Actual machines connected by SSH; coordination stays with the orchestrator.</text>
+<path d="M 890 198 L 955 198" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="922" y="174" fill="#586985" font-size="15" font-weight="500" text-anchor="middle">review</text>
+<path d="M 640 265 L 640 322 L 220 322 L 220 390" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 640 322 L 640 390" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 640 322 L 1060 322 L 1060 390" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 390 198 L 25 198 L 25 705 L 390 705" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<rect x="390" y="125" width="500" height="140" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
+<rect x="408" y="146" width="5" height="25" rx="2.5" fill="#4261b9"/>
+<text x="425" y="167" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Mac orchestrator</text>
+<text x="414" y="202" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Plan + contracts + fresh dispatch</text>
+<text x="414" y="230" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Review + integrate + publish</text>
+<rect x="955" y="128" width="280" height="137" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
+<rect x="973" y="149" width="5" height="25" rx="2.5" fill="#8c68b3"/>
+<text x="990" y="170" fill="#172644" font-size="23" font-weight="650" text-anchor="start">GitHub</text>
+<text x="979" y="205" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Reviewed history</text>
+<text x="979" y="233" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Protected default branch</text>
+<rect x="390" y="280" width="500" height="38" rx="10" fill="#f8faff"/>
+<text x="640" y="304" fill="#4261b9" font-size="18" font-weight="600" text-anchor="middle">Verified SSH • bounded brief • ordinary account</text>
+<rect x="45" y="390" width="350" height="165" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="63" y="411" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="80" y="432" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Mac worker 1</text>
+<text x="69" y="467" fill="#586985" font-size="18" font-weight="400" text-anchor="start">1..N independent CLI sessions</text>
+<text x="69" y="495" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Isolated checkouts + owned files</text>
+<text x="69" y="536" fill="#208c80" font-size="15" font-weight="600" text-anchor="start">Implement + test</text>
+<rect x="465" y="390" width="350" height="165" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="483" y="411" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="500" y="432" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Mac worker 2</text>
+<text x="489" y="467" fill="#586985" font-size="18" font-weight="400" text-anchor="start">1..N independent CLI sessions</text>
+<text x="489" y="495" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Isolated checkouts + owned files</text>
+<text x="489" y="536" fill="#208c80" font-size="15" font-weight="600" text-anchor="start">Implement + test</text>
+<rect x="885" y="390" width="350" height="165" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="903" y="411" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="920" y="432" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Linux ARM worker 3</text>
+<text x="909" y="467" fill="#586985" font-size="18" font-weight="400" text-anchor="start">1..N independent CLI sessions</text>
+<text x="909" y="495" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Isolated checkouts + owned files</text>
+<text x="909" y="536" fill="#208c80" font-size="15" font-weight="600" text-anchor="start">Implement + test</text>
+<text x="640" y="593" fill="#586985" font-size="18" font-weight="500" text-anchor="middle">Each worker returns changes, original logs, exit records, and closure evidence.</text>
+<rect x="390" y="655" width="500" height="100" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
+<rect x="408" y="676" width="5" height="25" rx="2.5" fill="#8c68b3"/>
+<text x="425" y="697" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Optional test targets</text>
+<text x="414" y="732" fill="#586985" font-size="18" font-weight="400" text-anchor="start">VM • GPU • service • device</text>
+<text x="55" y="680" fill="#8c68b3" font-size="18" font-weight="600" text-anchor="start">Serial resource gate</text>
+<text x="55" y="697" fill="#586985" font-size="16" font-weight="400" text-anchor="start">Explicit owner + authorization</text>
+<text x="45" y="786" fill="#586985" font-size="16" font-weight="400" text-anchor="start">CodexTandem is an operating method; host discovery and dispatch do not happen automatically.</text>
+</g>
+</svg>

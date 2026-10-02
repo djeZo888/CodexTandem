@@ -1,0 +1,24 @@
+flowchart LR
+  N[Each physical worker can host 1..N isolated sessions<br/>Disjoint file and resource ownership]
+  C[Orchestrator contract<br/>Interfaces · base SHA<br/>Timebox · acceptance]
+  A[Worker 1<br/>Owns API files + tests<br/>Isolated checkout A]
+  B[Worker 2<br/>Owns UI files + tests<br/>Isolated checkout B]
+  D[Worker 3<br/>Owns adapter files + tests<br/>Isolated checkout C]
+  R[Orchestrator review gate<br/>Diff + logs + exits<br/>Verified process closure]
+  I[Serial integration<br/>Shared checkout · default branch<br/>GPU · VM · service · device gate]
+  N -.-> A
+  N -.-> B
+  N -.-> D
+  C --> A
+  C --> B
+  C --> D
+  A --> R
+  B --> R
+  D --> R
+  R --> I
+  classDef root fill:#e6eefc,stroke:#4261b9,color:#152444
+  classDef worker fill:#e7f6f3,stroke:#208c80,color:#153e39
+  classDef gate fill:#f5effd,stroke:#8c68b3,color:#423050
+  class C root
+  class A,B,D worker
+  class R,I gate
