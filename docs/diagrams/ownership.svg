@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1420" height="790" viewBox="0 0 1420 790" role="img" aria-labelledby="title desc">
+<title id="title">CodexTandem ownership and resource gates</title>
+<desc id="desc">An agreed contract feeds three independent workers with disjoint file ownership and isolated checkouts. Their artifacts converge on an orchestrator review gate before serial integration and shared runtime access.</desc>
+<rect width="1420" height="790" rx="20" fill="#f8faff"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#6f82a3" stroke-width="1.6" stroke-linejoin="round"/></marker></defs>
+<g font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+<text x="45" y="56" fill="#172644" font-size="31" font-weight="700" text-anchor="start">Parallel implementation. One owner per file and resource.</text>
+<text x="45" y="87" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Each physical worker can host 1..N isolated sessions with disjoint files and resources.</text>
+<path d="M 330 382 L 365 382 L 365 218 L 405 218" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 365 382 L 405 398" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 365 382 L 365 578 L 405 578" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 735 218 L 770 218 L 770 340 L 800 340" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 735 398 L 770 398 L 770 340" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 735 578 L 770 578 L 770 340" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1060 340 L 1090 340" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="45" y="285" width="285" height="195" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
+<rect x="63" y="306" width="5" height="25" rx="2.5" fill="#4261b9"/>
+<text x="80" y="327" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Agreed contract</text>
+<text x="69" y="362" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Interfaces + base SHA</text>
+<text x="69" y="390" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Task owners + acceptance</text>
+<text x="69" y="418" fill="#586985" font-size="18" font-weight="400" text-anchor="start">User-selected timebox</text>
+<rect x="405" y="145" width="330" height="145" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="423" y="166" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="440" y="187" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Worker 1</text>
+<text x="429" y="222" fill="#586985" font-size="18" font-weight="400" text-anchor="start">API files + tests</text>
+<text x="429" y="250" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Isolated checkout A</text>
+<rect x="405" y="325" width="330" height="145" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="423" y="346" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="440" y="367" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Worker 2</text>
+<text x="429" y="402" fill="#586985" font-size="18" font-weight="400" text-anchor="start">UI files + tests</text>
+<text x="429" y="430" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Isolated checkout B</text>
+<rect x="405" y="505" width="330" height="145" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="423" y="526" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="440" y="547" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Worker 3</text>
+<text x="429" y="582" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Adapter files + tests</text>
+<text x="429" y="610" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Isolated checkout C</text>
+<rect x="800" y="270" width="260" height="166" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
+<rect x="818" y="291" width="5" height="25" rx="2.5" fill="#4261b9"/>
+<text x="835" y="312" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Review gate</text>
+<text x="824" y="347" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Diff + logs + exits</text>
+<text x="824" y="375" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Verified process closure</text>
+<rect x="1090" y="270" width="285" height="222" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
+<rect x="1108" y="291" width="5" height="25" rx="2.5" fill="#8c68b3"/>
+<text x="1125" y="312" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Serial integration</text>
+<text x="1114" y="347" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Integration checkout</text>
+<text x="1114" y="375" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Protected default branch</text>
+<text x="1114" y="403" fill="#586985" font-size="18" font-weight="400" text-anchor="start">GPU / VM / service / device</text>
+<text x="1114" y="473" fill="#8c68b3" font-size="15" font-weight="600" text-anchor="start">Orchestrator-controlled gate</text>
+<text x="570" y="686" fill="#208c80" font-size="18" font-weight="600" text-anchor="middle">Disjoint work can run together.</text>
+<text x="1087" y="550" fill="#8c68b3" font-size="18" font-weight="600" text-anchor="middle">Shared state has one active owner.</text>
+<text x="45" y="749" fill="#586985" font-size="18" font-weight="400" text-anchor="start">A contract change returns through the orchestrator and the affected owners before further edits.</text>
+</g>
+</svg>

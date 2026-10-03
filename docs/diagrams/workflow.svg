@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="835" viewBox="0 0 1280 835" role="img" aria-labelledby="title desc">
+<title id="title">CodexTandem task lifecycle</title>
+<desc id="desc">The orchestrator establishes a contract, dispatches a fresh brief, and receives an artifact after the paid worker session closes. It verifies original exits, logs, process absence, and changes before serial integration, acceptance, and publication.</desc>
+<rect width="1280" height="835" rx="20" fill="#f8faff"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#6f82a3" stroke-width="1.6" stroke-linejoin="round"/></marker></defs>
+<g font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+<text x="45" y="56" fill="#172644" font-size="30" font-weight="700" text-anchor="start">Dispatch → execute → close → review → integrate</text>
+<text x="45" y="87" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Long waits use ordinary tooling. Follow-up work starts with a fresh bounded brief.</text>
+<path d="M 230 175 L 230 780" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<path d="M 650 175 L 650 780" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<path d="M 1080 175 L 1080 780" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<rect x="60" y="115" width="340" height="60" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
+<rect x="78" y="136" width="5" height="25" rx="2.5" fill="#4261b9"/>
+<text x="95" y="157" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Orchestrator</text>
+<rect x="480" y="115" width="340" height="60" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="498" y="136" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="515" y="157" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Worker session</text>
+<rect x="920" y="115" width="320" height="60" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
+<rect x="938" y="136" width="5" height="25" rx="2.5" fill="#8c68b3"/>
+<text x="955" y="157" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Integration / GitHub</text>
+<rect x="50" y="190" width="475" height="35" rx="8" fill="#f8faff"/>
+<text x="60" y="215" fill="#4261b9" font-size="18" font-weight="600" text-anchor="start">1  Contract, base SHA, ownership, acceptance</text>
+<path d="M 230 263 L 650 263" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="440" y="250" fill="#586985" font-size="18" font-weight="500" text-anchor="middle">2  Verified SSH + fresh brief</text>
+<rect x="480" y="291" width="340" height="94" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="498" y="312" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="515" y="333" fill="#172644" font-size="23" font-weight="650" text-anchor="start">3  Implement + test</text>
+<text x="504" y="363" fill="#586985" font-size="16" font-weight="400" text-anchor="start">Isolated checkout; owned files</text>
+<rect x="480" y="396" width="340" height="72" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="498" y="417" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="515" y="438" fill="#172644" font-size="23" font-weight="650" text-anchor="start">4  Close paid session</text>
+<text x="650" y="490" fill="#208c80" font-size="16" font-weight="500" text-anchor="middle">On completion or dependency wait</text>
+<path d="M 650 526 L 230 526" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="440" y="513" fill="#586985" font-size="16" font-weight="500" text-anchor="middle">Artifact SHA + small receipt + original logs</text>
+<rect x="60" y="552" width="340" height="111" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
+<rect x="78" y="573" width="5" height="25" rx="2.5" fill="#4261b9"/>
+<text x="95" y="594" fill="#172644" font-size="23" font-weight="650" text-anchor="start">5  Review the real evidence</text>
+<text x="84" y="629" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Exits + logs + process absence</text>
+<text x="84" y="657" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Inspect changes and ownership</text>
+<path d="M 400 610 L 920 610" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="653" y="595" fill="#586985" font-size="16" font-weight="500" text-anchor="middle">6  Serial integration + authorized acceptance</text>
+<rect x="920" y="638" width="320" height="100" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
+<rect x="938" y="659" width="5" height="25" rx="2.5" fill="#8c68b3"/>
+<text x="955" y="680" fill="#172644" font-size="23" font-weight="650" text-anchor="start">7  Publish after review</text>
+<text x="944" y="715" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Required human merge gate</text>
+<path d="M 230 698 L 650 698" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<text x="440" y="687" fill="#4261b9" font-size="15" font-weight="500" text-anchor="middle">If needed: new brief with remaining delta</text>
+<text x="45" y="815" fill="#586985" font-size="16" font-weight="400" text-anchor="start">UNKNOWN and PARTIAL remain visible. A zero exit at one layer does not prove acceptance at every layer.</text>
+</g>
+</svg>
