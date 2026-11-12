@@ -1,50 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="835" viewBox="0 0 1280 835" role="img" aria-labelledby="title desc">
-<title id="title">CodexTandem task lifecycle</title>
-<desc id="desc">The orchestrator establishes a contract, dispatches a fresh brief, and receives an artifact after the paid worker session closes. It verifies original exits, logs, process absence, and changes before serial integration, acceptance, and publication.</desc>
-<rect width="1280" height="835" rx="20" fill="#f8faff"/>
-<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#6f82a3" stroke-width="1.6" stroke-linejoin="round"/></marker></defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1335" viewBox="0 0 1500 1335" role="img" aria-labelledby="title desc">
+<title id="title">CodexTandem lifecycle with optional advisor escalation</title>
+<desc id="desc">The normal contract, dispatch, implementation, closure, review, integration and publication workflow remains intact. Optional advice is requested either for a user-requested plan review or after both a worker and orchestrator cannot solve the problem. The orchestrator validates advice and sends a fresh bounded brief. If advice is unavailable, the user chooses whether to proceed without review or resolve the account limit.</desc>
+<rect width="1500" height="1335" rx="20" fill="#f8faff"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#6f82a3" stroke-width="1.6" stroke-linejoin="round"/></marker><marker id="advice-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#ad7420" stroke-width="1.6" stroke-linejoin="round"/></marker></defs>
 <g font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
-<text x="45" y="56" fill="#172644" font-size="30" font-weight="700" text-anchor="start">Dispatch → execute → close → review → integrate</text>
-<text x="45" y="87" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Long waits use ordinary tooling. Follow-up work starts with a fresh bounded brief.</text>
-<path d="M 230 175 L 230 780" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 5"/>
-<path d="M 650 175 L 650 780" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 5"/>
-<path d="M 1080 175 L 1080 780" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 5"/>
-<rect x="60" y="115" width="340" height="60" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
-<rect x="78" y="136" width="5" height="25" rx="2.5" fill="#4261b9"/>
-<text x="95" y="157" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Orchestrator</text>
-<rect x="480" y="115" width="340" height="60" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
-<rect x="498" y="136" width="5" height="25" rx="2.5" fill="#208c80"/>
-<text x="515" y="157" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Worker session</text>
-<rect x="920" y="115" width="320" height="60" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
-<rect x="938" y="136" width="5" height="25" rx="2.5" fill="#8c68b3"/>
-<text x="955" y="157" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Integration / GitHub</text>
-<rect x="50" y="190" width="475" height="35" rx="8" fill="#f8faff"/>
-<text x="60" y="215" fill="#4261b9" font-size="18" font-weight="600" text-anchor="start">1  Contract, base SHA, ownership, acceptance</text>
-<path d="M 230 263 L 650 263" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<text x="440" y="250" fill="#586985" font-size="18" font-weight="500" text-anchor="middle">2  Verified SSH + fresh brief</text>
-<rect x="480" y="291" width="340" height="94" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
-<rect x="498" y="312" width="5" height="25" rx="2.5" fill="#208c80"/>
-<text x="515" y="333" fill="#172644" font-size="23" font-weight="650" text-anchor="start">3  Implement + test</text>
-<text x="504" y="363" fill="#586985" font-size="16" font-weight="400" text-anchor="start">Isolated checkout; owned files</text>
-<rect x="480" y="396" width="340" height="72" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
-<rect x="498" y="417" width="5" height="25" rx="2.5" fill="#208c80"/>
-<text x="515" y="438" fill="#172644" font-size="23" font-weight="650" text-anchor="start">4  Close paid session</text>
-<text x="650" y="490" fill="#208c80" font-size="16" font-weight="500" text-anchor="middle">On completion or dependency wait</text>
-<path d="M 650 526 L 230 526" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<text x="440" y="513" fill="#586985" font-size="16" font-weight="500" text-anchor="middle">Artifact SHA + small receipt + original logs</text>
-<rect x="60" y="552" width="340" height="111" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
-<rect x="78" y="573" width="5" height="25" rx="2.5" fill="#4261b9"/>
-<text x="95" y="594" fill="#172644" font-size="23" font-weight="650" text-anchor="start">5  Review the real evidence</text>
-<text x="84" y="629" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Exits + logs + process absence</text>
-<text x="84" y="657" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Inspect changes and ownership</text>
-<path d="M 400 610 L 920 610" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<text x="653" y="595" fill="#586985" font-size="16" font-weight="500" text-anchor="middle">6  Serial integration + authorized acceptance</text>
-<rect x="920" y="638" width="320" height="100" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
-<rect x="938" y="659" width="5" height="25" rx="2.5" fill="#8c68b3"/>
-<text x="955" y="680" fill="#172644" font-size="23" font-weight="650" text-anchor="start">7  Publish after review</text>
-<text x="944" y="715" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Required human merge gate</text>
-<path d="M 230 698 L 650 698" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
-<text x="440" y="687" fill="#4261b9" font-size="15" font-weight="500" text-anchor="middle">If needed: new brief with remaining delta</text>
-<text x="45" y="815" fill="#586985" font-size="16" font-weight="400" text-anchor="start">UNKNOWN and PARTIAL remain visible. A zero exit at one layer does not prove acceptance at every layer.</text>
+<text x="45" y="56" fill="#172644" font-size="31" font-weight="700" text-anchor="start">Keep the normal workflow. Escalate only the hard decision.</text>
+<text x="45" y="89" fill="#586985" font-size="18" font-weight="400" text-anchor="start">The advisor is optional and read-only. The orchestrator keeps ownership of every next action.</text>
+<text x="85" y="139" fill="#4261b9" font-size="16" font-weight="700" text-anchor="start">DEFAULT DELIVERY PATH</text>
+<text x="845" y="139" fill="#ad7420" font-size="16" font-weight="700" text-anchor="start">OPTIONAL EXPERT ADVICE</text>
+<path d="M 385 270 L 385 365" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 385 465 L 385 530" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 385 655 L 385 695" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 385 820 L 385 860" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 385 1010 L 385 1160" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 685 220 L 845 220" fill="none" stroke="#ad7420" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#advice-arrow)"/>
+<path d="M 1130 305 L 1130 390" fill="none" stroke="#ad7420" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#advice-arrow)"/>
+<path d="M 1130 525 L 1130 600" fill="none" stroke="#ad7420" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#advice-arrow)"/>
+<path d="M 845 680 L 760 680 L 760 415 L 685 415" fill="none" stroke="#ad7420" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#advice-arrow)"/>
+<path d="M 685 935 L 845 935" fill="none" stroke="#ad7420" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#advice-arrow)"/>
+<path d="M 1415 945 L 1470 945 L 1470 455 L 1415 455" fill="none" stroke="#ad7420" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#advice-arrow)"/>
+<path d="M 1415 500 L 1440 500 L 1440 933 M 1440 957 L 1440 1160 L 1415 1160" fill="none" stroke="#ad7420" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#advice-arrow)"/>
+<rect x="85" y="170" width="600" height="100" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
+<rect x="103" y="191" width="5" height="25" rx="2.5" fill="#4261b9"/>
+<text x="120" y="212" fill="#172644" font-size="23" font-weight="650" text-anchor="start">1  Plan the contract</text>
+<text x="109" y="248" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Base SHA • ownership • interfaces • acceptance</text>
+<rect x="249.0" y="294" width="271.9" height="26" rx="4" fill="#f8faff"/>
+<text x="385" y="314" fill="#4261b9" font-size="17" font-weight="500" text-anchor="middle">After any requested review</text>
+<rect x="85" y="365" width="600" height="100" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
+<rect x="103" y="386" width="5" height="25" rx="2.5" fill="#4261b9"/>
+<text x="120" y="407" fill="#172644" font-size="23" font-weight="650" text-anchor="start">2  Dispatch a fresh bounded brief</text>
+<text x="109" y="443" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Use the selected capable worker; verified SSH</text>
+<rect x="85" y="530" width="600" height="125" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="103" y="551" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="120" y="572" fill="#172644" font-size="23" font-weight="650" text-anchor="start">3  Worker implements and tests</text>
+<text x="109" y="608" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Isolated checkout + owned files</text>
+<text x="109" y="636" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Prefer lower-cost models that meet the task</text>
+<rect x="85" y="695" width="600" height="125" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="103" y="716" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="120" y="737" fill="#172644" font-size="23" font-weight="650" text-anchor="start">4  Close and return</text>
+<text x="109" y="773" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Artifact SHA + receipt + original logs</text>
+<text x="109" y="801" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Close paid sessions during dependency waits</text>
+<rect x="85" y="860" width="600" height="150" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
+<rect x="103" y="881" width="5" height="25" rx="2.5" fill="#4261b9"/>
+<text x="120" y="902" fill="#172644" font-size="23" font-weight="650" text-anchor="start">5  Orchestrator reviews and investigates</text>
+<text x="109" y="938" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Inspect diff, logs, exits, and process closure</text>
+<text x="109" y="966" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Try to resolve blockers from the evidence</text>
+<text x="109" y="994" fill="#586985" font-size="18" font-weight="400" text-anchor="start">If both cannot solve: use the optional advisor</text>
+<rect x="224.8" y="1040" width="320.4" height="26" rx="4" fill="#f8faff"/>
+<text x="385" y="1060" fill="#4261b9" font-size="17" font-weight="600" text-anchor="middle">Only after required checks pass</text>
+<rect x="238.2" y="1069" width="293.6" height="25" rx="4" fill="#f8faff"/>
+<text x="385" y="1088" fill="#586985" font-size="16" font-weight="400" text-anchor="middle">Unresolved work stays blocked.</text>
+<rect x="85" y="1160" width="600" height="125" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
+<rect x="103" y="1181" width="5" height="25" rx="2.5" fill="#8c68b3"/>
+<text x="120" y="1202" fill="#172644" font-size="23" font-weight="650" text-anchor="start">6  Integrate, test, and publish</text>
+<text x="109" y="1238" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Serial integration + authorized acceptance</text>
+<text x="109" y="1266" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Required review and merge gate</text>
+<rect x="845" y="170" width="570" height="135" rx="16" fill="#fff3db" stroke="#ad7420" stroke-width="1.6"/>
+<rect x="863" y="191" width="5" height="25" rx="2.5" fill="#ad7420"/>
+<text x="880" y="212" fill="#172644" font-size="21" font-weight="650" text-anchor="start">Trigger A: the user requests a plan review</text>
+<text x="869" y="248" fill="#586985" font-size="18" font-weight="400" text-anchor="start">“Review this plan with Fable 5.2.”</text>
+<text x="869" y="276" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Prepare a focused brief and evidence paths</text>
+<rect x="910.2" y="335" width="439.5" height="25" rx="4" fill="#f8faff"/>
+<text x="1130" y="354" fill="#ad7420" font-size="16" font-weight="500" text-anchor="middle">A bounded consult; no routine automatic review</text>
+<rect x="845" y="390" width="570" height="135" rx="16" fill="#fff3db" stroke="#ad7420" stroke-width="1.6"/>
+<rect x="863" y="411" width="5" height="25" rx="2.5" fill="#ad7420"/>
+<text x="880" y="432" fill="#172644" font-size="21" font-weight="650" text-anchor="start">Fable 5.2 or another configured advisor</text>
+<text x="869" y="468" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Read-only critique or diagnosis</text>
+<text x="869" y="496" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Find missing evidence; propose the next approach</text>
+<rect x="928.5" y="550" width="403.0" height="25" rx="4" fill="#f8faff"/>
+<text x="1130" y="569" fill="#ad7420" font-size="16" font-weight="500" text-anchor="middle">Written advice returns to the orchestrator</text>
+<rect x="845" y="600" width="570" height="150" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
+<rect x="863" y="621" width="5" height="25" rx="2.5" fill="#4261b9"/>
+<text x="880" y="642" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Orchestrator validates the response</text>
+<text x="869" y="678" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Verify claims; record ACCEPT / REJECT / DEFER</text>
+<text x="869" y="706" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Revise the plan or send a fresh bounded brief</text>
+<text x="869" y="734" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Return implementation to a capable worker</text>
+<text x="985" y="784" fill="#4261b9" font-size="17" font-weight="500" text-anchor="start">No direct advisor-to-worker instructions.</text>
+<rect x="845" y="890" width="570" height="120" rx="16" fill="#fff3db" stroke="#ad7420" stroke-width="1.6"/>
+<rect x="863" y="911" width="5" height="25" rx="2.5" fill="#ad7420"/>
+<text x="880" y="932" fill="#172644" font-size="21" font-weight="650" text-anchor="start">Trigger B: both worker AND orchestrator stuck</text>
+<text x="869" y="968" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Neither can resolve the issue or find an approach</text>
+<text x="869" y="996" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Send failures, attempts, files, and exact evidence</text>
+<rect x="845" y="1090" width="570" height="180" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
+<rect x="863" y="1111" width="5" height="25" rx="2.5" fill="#8c68b3"/>
+<text x="880" y="1132" fill="#172644" font-size="21" font-weight="650" text-anchor="start">No answer or LIMIT_REACHED?</text>
+<text x="869" y="1168" fill="#586985" font-size="17" font-weight="400" text-anchor="start">Report the actual reason to the user.</text>
+<text x="869" y="1196" fill="#586985" font-size="17" font-weight="400" text-anchor="start">User chooses: continue without the review,</text>
+<text x="869" y="1224" fill="#586985" font-size="17" font-weight="400" text-anchor="start">or add credits / wait for access to recover.</text>
+<text x="869" y="1252" fill="#586985" font-size="17" font-weight="400" text-anchor="start">Do not silently pass a requested review gate.</text>
+<text x="45" y="1310" fill="#586985" font-size="17" font-weight="400" text-anchor="start">A premium advisor may reduce failed attempts; it does not replace tests or guarantee a cheaper or correct outcome.</text>
 </g>
 </svg>

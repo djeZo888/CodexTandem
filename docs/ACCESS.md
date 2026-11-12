@@ -40,6 +40,8 @@ SSH grants access to an ordinary account on a particular host. Use dedicated per
 
 Codex authentication enables model access; it does not grant GitHub permissions. Authenticate each host through an approved method. Treat saved authentication state as secret and keep it outside public repositories. Do not copy authentication state into public CI or log its contents.
 
+The [optional advisor](ADVISOR.md) has its own provider login on the orchestrator host. Keep that login out of worker environments and public artifacts. Human sign-in and account spending controls remain the account owner's responsibility. An advisor may send the files it reads to its model provider; scope evidence deliberately and exclude credentials and private keys. A read-only role does not make data stay local or establish an OS filesystem sandbox.
+
 The normal worker run uses a workspace write sandbox and respects applicable approval rules. Do not add a sandbox or approval bypass because SSH is unattended. If a task requires more access, make the necessary action concrete and obtain the authorization required by the current project and environment.
 
 ## Local access profile

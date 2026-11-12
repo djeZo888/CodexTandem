@@ -8,6 +8,10 @@ The orchestrator keeps one durable plan and a small task ledger. Workers get onl
 
 Before dispatch, define the desired behavior, interfaces, base commit, file owners, shared resource owners, and acceptance checks. Identify which work is independent and which needs a producer's result. Give every shared GPU, service, device, VM, deployment, or integration checkout one active owner.
 
+If the user explicitly requests a plan review by the optional advisor, send the plan and relevant evidence before dispatching the affected work. Evaluate each finding, revise the plan where justified, and then issue the worker briefs. Multiple workers or a shared interface alone do not trigger a paid consultation. See [Advisor](ADVISOR.md).
+
+Choose capable, lower-cost models for routine work within the user's model selections. Keep a premium advisor available for difficult reasoning instead of assigning it every implementation task. The aim is to reduce total retries and rework, not merely the price of one request; measure project cost and acceptance outcomes before claiming savings.
+
 Independent tasks may run in parallel across physical machines. Multiple sessions on one machine require isolated workspaces and disjoint files and resources. Do not count an idle session waiting on a dependency as productive capacity.
 
 Use a compact ledger:
@@ -100,6 +104,14 @@ The orchestrator checks the original logs, all applicable exit statuses, process
 Reproduce meaningful checks in the integration environment where appropriate. Synthetic tests prove their fixture behavior; hosted execution, physical device behavior, lifecycle cleanup, and UI acceptance each need their own evidence. Keep `UNKNOWN`, `PARTIAL`, and `NOT_TESTED` visible. Never upgrade them to passed because another layer succeeded.
 
 If fixes are needed, send a fresh brief containing the relevant review findings and remaining delta. Do not resume a retired worker session. An active worker that still owns a bounded task may receive steering before closure; once closed, use a new session for new work.
+
+### When both worker and orchestrator are stuck
+
+The worker reports the failing behavior, original logs, attempted fixes, and remaining uncertainty. The orchestrator first checks the evidence and investigates the cause. If it can resolve the issue, it sends a normal follow-up brief. If the worker and orchestrator both cannot resolve it or find a solution, consult the optional advisor when configured and authorized.
+
+Send a focused question, the exact failed command and outcome, relevant file paths, and what has already been ruled out. The advisor supplies a read-only diagnosis or critique. The orchestrator verifies the advice, records ACCEPT, REJECT, or DEFER for each numbered finding, and gives a capable worker the bounded next step. Limit a topic to two consultation rounds; if no usable solution emerges, report the remaining blocker rather than entering an expensive retry loop.
+
+Without an advisor, the baseline workflow remains available: report the unresolved issue and agree the next step with the user. If a configured advisor returns `LIMIT_REACHED`, quote the actual provider reason and record `ADVISOR: NOT_CONSULTED (limit)`. Let the user choose to continue without its review or add credits/wait for limits to reset. Do not silently mark a requested review complete or retry against an exhausted account. [Advisor](ADVISOR.md) covers the other failure statuses.
 
 ## 7. Integrate, test, and publish
 

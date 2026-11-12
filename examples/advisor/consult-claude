@@ -1,0 +1,307 @@
+#!/bin/sh
+# consult-claude: read-only second opinion from Claude for a Codex orchestrator.
+#
+# Usage:
+#   consult-claude [options] < brief.md
+#
+# Options:
+#   --cd DIR        run in DIR, the project checkout the advisor may read (default: current dir)
+#   --topic NAME    short label used in log file names (default: consult)
+#   --resume ID     continue an earlier consultation by session ID
+#   --add-dir DIR   extra directory the advisor may read (repeatable)
+#   --timeout SEC   wall-clock limit in seconds (default: 2700); raise it for large reviews
+#   --subagents     let the advisor hand reading to helper agents: same model and effort,
+#                   a few at a time, no nesting. Faster on large reviews, and costs more
+#   --strict-model N
+#                   1 (default): a safety-flagged request ends in a refusal
+#                   0: accept an answer from Claude Code's fallback model instead;
+#                      such an answer is reported as MODEL_MISMATCH
+#   --log-dir DIR   where briefs, answers and raw output are kept (default: .consult)
+#
+# The model and effort level are fixed by the owner below and are not options.
+# There is no per-consult spending cap; the Claude account's own limits apply.
+#
+# stdout: the advisor's answer (Markdown).
+# stderr: one status line "consult-claude: <STATUS> ...", plus the reason on failure.
+#
+# Exit codes and status words:
+#   0 OK              answered
+#   2 USAGE           bad arguments or empty brief
+#   3 SETUP           claude, jq or the role file is missing
+#   4 SIGN_IN_NEEDED  not signed in as seen from this process: stop and ask the human
+#   5 TIMEOUT         no answer within the time limit
+#   6 FAILED          the run ended with an error, or the model declined the request
+#   7 MODEL_MISMATCH  answered, but the fixed model is missing from the usage report,
+#                     or another model took part
+#   8 LIMIT_REACHED   plan limit, credit balance or spend limit is used up:
+#                     tell the human to choose proceeding without review or adding credits
+
+set -u
+
+# Fixed by the owner. Change only by editing these lines.
+MODEL=claude-fable-5-2
+EFFORT=xhigh
+# Helper agents that may run at once when --subagents is given.
+SUBAGENT_MAX=4
+
+# Defaults the caller may change per consult with --strict-model and --subagents.
+STRICT_MODEL=1
+SUBAGENTS=0
+
+CLAUDE_BIN=${CONSULT_CLAUDE_BIN:-$HOME/.local/bin/claude}
+TIMEOUT=${CONSULT_TIMEOUT_SEC:-2700}
+GRACE=${CONSULT_GRACE_SEC:-15}
+ROLE_FILE=${CONSULT_ROLE_FILE:-$HOME/.config/consult-claude/advisor-role.md}
+TOKEN_FILE=${CONSULT_TOKEN_FILE:-$HOME/.config/consult-claude/oauth-token}
+LOG_DIR=${CONSULT_LOG_DIR:-.consult}
+SAFE_MODE=${CONSULT_SAFE_MODE:-1}
+ALLOWED_TOOLS=${CONSULT_ALLOWED_TOOLS:-}
+TOPIC=consult
+RESUME=
+WORKDIR=
+ADD_DIRS=
+NL='
+'
+stamp=
+safe_topic=
+session=
+models=
+cost=
+pid=
+
+say() { printf 'consult-claude: %s\n' "$*" >&2; }
+log_index() {
+  [ -n "$stamp" ] || return 0
+  printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$stamp" "$safe_topic" "$1" "$session" "$models" "$cost" \
+    >> "$LOG_DIR/index.tsv" 2>/dev/null
+}
+die() { code=$1; shift; log_index "${1%% *}"; say "$*"; exit "$code"; }
+need_arg() { [ $# -ge 2 ] || die 2 "USAGE $1 needs a value"; }
+first_line() { head -n 1 "$1" 2>/dev/null | cut -c 1-240; }
+
+# Sort an error text into LIMIT, LOGIN or REFUSED. Prints nothing if it is none of these.
+classify_error() {
+  if grep -Eqi "hit your .{0,40}(limit|budget)|limit reached|credit balance is too low|spend limit|usage credits" "$@" 2>/dev/null; then
+    echo LIMIT
+  elif grep -Eqi "run /login|not logged in|login expired|sign in again|failed to authenticate|oauth token|invalid authentication|invalid api key|could not resolve authentication|login not accepted|authentication_failed" "$@" 2>/dev/null; then
+    echo LOGIN
+  elif grep -Eqi "safeguards flagged|safety measures that flagged|can't help with this|violate our usage policy" "$@" 2>/dev/null; then
+    echo REFUSED
+  fi
+}
+# The same, for a run that reported success but whose whole "answer" is a one-line notice.
+classify_notice() {
+  [ "$(wc -l < "$1" | tr -d ' ')" -le 3 ] || return 0
+  if head -n 1 "$1" | grep -Eq "^(You've hit your |Credit balance is too low|Fable limit reached|Fable [0-9.]+ now uses usage credits)"; then
+    echo LIMIT
+  elif head -n 1 "$1" | grep -Eq "^(Not logged in|Login expired|Authentication required)"; then
+    echo LOGIN
+  elif head -n 1 "$1" | grep -Eq "^([A-Za-z0-9 .]+'s safeguards flagged|[A-Za-z0-9 .]+ has safety measures that flagged|[A-Za-z0-9 .]+ can't help with this|Claude Code is unable to respond to this request)"; then
+    echo REFUSED
+  fi
+}
+fail_as() {  # $1 = LIMIT | LOGIN | REFUSED | "", $2 = reason, $3 = where to look
+  case $1 in
+    LIMIT)   die 8 "LIMIT_REACHED ${2:-usage limit or credits used up}; advisory unavailable. Ask the human whether to continue without review or add credits. Details: $3" ;;
+    LOGIN)   die 4 "SIGN_IN_NEEDED ${2:-authentication failed}. Details: $3" ;;
+    REFUSED)
+      if [ "$STRICT_MODEL" = 1 ]; then
+        hint="Do not resend it unchanged; one retry with --strict-model 0 is allowed."
+      else
+        hint="Do not resend it."
+      fi
+      die 6 "FAILED the model declined this request: ${2:-no reason given}. $hint Details: $3" ;;
+  esac
+}
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    --cd)      need_arg "$@"; WORKDIR=$2; shift 2 ;;
+    --topic)   need_arg "$@"; TOPIC=$2; shift 2 ;;
+    --resume)  need_arg "$@"; RESUME=$2; shift 2 ;;
+    --add-dir) need_arg "$@"; ADD_DIRS="$ADD_DIRS$2$NL"; shift 2 ;;
+    --timeout) need_arg "$@"; TIMEOUT=$2; shift 2 ;;
+    --subagents) SUBAGENTS=1; shift ;;
+    --strict-model) need_arg "$@"; STRICT_MODEL=$2; shift 2 ;;
+    --log-dir) need_arg "$@"; LOG_DIR=$2; shift 2 ;;
+    -h|--help) sed -n '2,/^$/p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    *)         die 2 "USAGE unknown option: $1" ;;
+  esac
+done
+
+case $TIMEOUT in ''|*[!0-9]*) die 2 "USAGE --timeout must be a whole number of seconds" ;; esac
+case $GRACE in ''|*[!0-9]*) GRACE=15 ;; esac
+case $STRICT_MODEL in 0|1) ;; *) die 2 "USAGE --strict-model must be 0 or 1" ;; esac
+
+if [ -n "$WORKDIR" ]; then
+  cd "$WORKDIR" || die 2 "USAGE cannot cd to $WORKDIR"
+fi
+if [ -t 0 ]; then
+  die 2 "USAGE pipe the brief on stdin: consult-claude --topic NAME < brief.md"
+fi
+
+if [ ! -x "$CLAUDE_BIN" ]; then
+  CLAUDE_BIN=$(command -v claude 2>/dev/null) || die 3 "SETUP claude CLI not found; set CONSULT_CLAUDE_BIN"
+fi
+command -v jq >/dev/null 2>&1 || die 3 "SETUP jq not found"
+[ -r "$ROLE_FILE" ] || die 3 "SETUP role file missing: $ROLE_FILE"
+
+# Bill the signed-in Claude plan, not an API key that happens to be in the environment.
+if [ "${CONSULT_KEEP_API_ENV:-0}" != 1 ]; then
+  unset ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN
+fi
+# Pin the effort level for the session and for any helper agents. This variable outranks
+# every other way of setting effort, so nothing in the caller's environment can change it.
+CLAUDE_CODE_EFFORT_LEVEL=$EFFORT
+export CLAUDE_CODE_EFFORT_LEVEL
+if [ "$SUBAGENTS" = 1 ]; then
+  # Helper agents: forced onto the fixed model, a few at a time, no nesting.
+  CLAUDE_CODE_SUBAGENT_MODEL=$MODEL
+  CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1
+  CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH=1
+  CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS=$SUBAGENT_MAX
+  export CLAUDE_CODE_SUBAGENT_MODEL CLAUDE_CODE_SUBAGENT_MODEL_FORCE \
+    CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS
+  DENY="Edit,Write,NotebookEdit,Workflow"
+  sub=on
+else
+  DENY="Edit,Write,NotebookEdit,Agent,Workflow"
+  sub=off
+fi
+# Optional fallback login: a human-managed long-lived token kept in a private file.
+if [ -z "${CLAUDE_CODE_OAUTH_TOKEN:-}" ] && [ -r "$TOKEN_FILE" ]; then
+  CLAUDE_CODE_OAUTH_TOKEN=$(cat "$TOKEN_FILE")
+  export CLAUDE_CODE_OAUTH_TOKEN
+fi
+
+mkdir -p "$LOG_DIR" || die 3 "SETUP cannot create log dir: $LOG_DIR"
+safe_topic=$(printf %s "$TOPIC" | LC_ALL=C tr -c 'A-Za-z0-9._-' '-')
+stamp=$(date -u +%Y%m%dT%H%M%SZ)
+base=$LOG_DIR/$stamp-$safe_topic
+brief=$base.brief.md
+raw=$base.raw.json
+res=$base.result.json
+errf=$base.stderr.txt
+answer=$base.answer.md
+
+cat > "$brief"
+[ -s "$brief" ] || die 2 "USAGE empty brief on stdin"
+
+"$CLAUDE_BIN" auth status >/dev/null 2>&1 || die 4 "SIGN_IN_NEEDED 'claude auth status' failed in this process. If it succeeds in the user's own Terminal, the cause is this process's sandbox (Keychain or network), not the login."
+
+set -- -p --model "$MODEL" --effort "$EFFORT" \
+  --permission-mode dontAsk --permission-prompts none \
+  --disallowedTools "$DENY" \
+  --append-system-prompt "$(cat "$ROLE_FILE")"
+[ "$STRICT_MODEL" = 1 ] && set -- "$@" --settings '{"switchModelsOnFlag":false}'
+[ "$SAFE_MODE" = 1 ] && set -- "$@" --safe-mode
+[ -n "$ALLOWED_TOOLS" ] && set -- "$@" --allowedTools "$ALLOWED_TOOLS"
+[ -n "$RESUME" ] && set -- "$@" --resume "$RESUME"
+old_ifs=$IFS
+IFS=$NL
+set -f
+for d in $ADD_DIRS; do
+  [ -n "$d" ] && set -- "$@" --add-dir "$d"
+done
+set +f
+IFS=$old_ifs
+# A single-value flag goes last, after the list-style flags above.
+set -- "$@" --output-format json
+
+trap '[ -n "$pid" ] && kill -TERM "$pid" 2>/dev/null; exit 130' INT TERM HUP
+
+"$CLAUDE_BIN" "$@" < "$brief" > "$raw" 2> "$errf" &
+pid=$!
+
+elapsed=0
+timed_out=0
+while kill -0 "$pid" 2>/dev/null; do
+  if [ "$elapsed" -ge "$TIMEOUT" ]; then
+    timed_out=1
+    kill -INT "$pid" 2>/dev/null
+    n=0
+    while kill -0 "$pid" 2>/dev/null && [ "$n" -lt "$GRACE" ]; do
+      sleep 1
+      n=$((n + 1))
+    done
+    kill -TERM "$pid" 2>/dev/null
+    n=0
+    while kill -0 "$pid" 2>/dev/null && [ "$n" -lt 5 ]; do
+      sleep 1
+      n=$((n + 1))
+    done
+    kill -KILL "$pid" 2>/dev/null
+    break
+  fi
+  sleep 2
+  elapsed=$((elapsed + 2))
+done
+wait "$pid" 2>/dev/null
+rc=$?
+pid=
+
+if [ "$timed_out" = 1 ]; then
+  die 5 "TIMEOUT after ${TIMEOUT}s; partial output, if any: $raw"
+fi
+
+# Accept a single result object, or a list of messages that ends in a result.
+jq -s 'flatten(1)
+       | map(select(type == "object" and (.type == "result" or has("result") or has("is_error"))))
+       | last // empty' "$raw" > "$res" 2>/dev/null
+if [ ! -s "$res" ]; then
+  fail_as "$(classify_error "$raw" "$errf")" "$(first_line "$errf")" "$errf and $raw"
+  die 6 "FAILED exit=$rc and no JSON result; see $errf and $raw"
+fi
+
+jq -r '.result // empty' "$res" > "$answer"
+is_error=$(jq -r '.is_error // false' "$res")
+subtype=$(jq -r '.subtype // "unknown"' "$res")
+session=$(jq -r '.session_id // "unknown"' "$res")
+cost=$(jq -r '.total_cost_usd // "unknown"' "$res")
+turns=$(jq -r '.num_turns // "unknown"' "$res")
+models=$(jq -r '(.modelUsage // {}) | keys | join(",")' "$res")
+[ -n "$models" ] || models=unknown
+reason=$(first_line "$answer")
+
+if [ "$rc" -ne 0 ] || [ "$is_error" = true ]; then
+  fail_as "$(classify_error "$answer" "$errf")" "$reason" "$answer and $errf"
+  die 6 "FAILED exit=$rc subtype=$subtype session=$session reason: ${reason:-none given}; details: $answer and $errf"
+fi
+[ -s "$answer" ] || die 6 "FAILED empty answer; session=$session; see $raw"
+fail_as "$(classify_notice "$answer")" "$reason" "$answer"
+
+cat "$answer"
+
+# Which models took part? Anything besides the fixed model and a Haiku helper is reported.
+has_fixed=0
+others=
+old_ifs=$IFS
+IFS=,
+set -f
+for m in $models; do
+  case $m in
+    "$MODEL")   has_fixed=1 ;;
+    *haiku*)    ;;
+    *)          others="$others${others:+,}$m" ;;
+  esac
+done
+set +f
+IFS=$old_ifs
+info="effort=$EFFORT subagents=$sub strict=$STRICT_MODEL cost_usd=$cost turns=$turns answer=$answer"
+
+if [ "$models" = unknown ]; then
+  log_index MODEL_MISMATCH
+  say "MODEL_MISMATCH wanted=$MODEL got=unknown (usage report missing; model not verified) session=$session $info"
+  exit 7
+elif [ "$has_fixed" = 0 ]; then
+  log_index MODEL_MISMATCH
+  say "MODEL_MISMATCH wanted=$MODEL got=$models session=$session $info"
+  exit 7
+elif [ -n "$others" ]; then
+  log_index MODEL_MISMATCH
+  say "MODEL_MISMATCH wanted=$MODEL only, but these also took part: $others session=$session models=$models $info"
+  exit 7
+fi
+log_index OK
+say "OK session=$session models=$models $info"
+exit 0
