@@ -1,0 +1,4 @@
+# Advisor conversations stay local.
+.consult/
+# Offline test fixtures normally clean themselves up.
+examples/advisor/.smoke-*/

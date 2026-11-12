@@ -1,54 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="810" viewBox="0 0 1280 810" role="img" aria-labelledby="title desc">
-<title id="title">CodexTandem host topology</title>
-<desc id="desc">An instructed Mac orchestrator dispatches fresh bounded tasks over verified SSH to two Mac workers and one ARM Linux worker. The orchestrator reviews and publishes to GitHub and controls optional test targets through a serial gate.</desc>
-<rect width="1280" height="810" rx="20" fill="#f8faff"/>
-<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#6f82a3" stroke-width="1.6" stroke-linejoin="round"/></marker></defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1120" viewBox="0 0 1500 1120" role="img" aria-labelledby="title desc">
+<title id="title">CodexTandem with an optional expert advisor</title>
+<desc id="desc">One orchestrator coordinates capable workers over SSH. It may consult a read-only Fable 5.2 advisor for a user-requested plan review or when both worker and orchestrator cannot resolve a problem. Advice returns to the orchestrator, which alone decides, dispatches, integrates, and publishes.</desc>
+<rect width="1500" height="1120" rx="20" fill="#f8faff"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#6f82a3" stroke-width="1.6" stroke-linejoin="round"/></marker><marker id="advice-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#ad7420" stroke-width="1.6" stroke-linejoin="round"/></marker></defs>
 <g font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
-<text x="45" y="56" fill="#172644" font-size="32" font-weight="700" text-anchor="start">One orchestrator. Independent workers.</text>
-<text x="45" y="87" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Actual machines connected by SSH; coordination stays with the orchestrator.</text>
-<path d="M 890 198 L 955 198" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<text x="922" y="174" fill="#586985" font-size="15" font-weight="500" text-anchor="middle">review</text>
-<path d="M 640 265 L 640 322 L 220 322 L 220 390" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<path d="M 640 322 L 640 390" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<path d="M 640 322 L 1060 322 L 1060 390" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<path d="M 390 198 L 25 198 L 25 705 L 390 705" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
-<rect x="390" y="125" width="500" height="140" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
-<rect x="408" y="146" width="5" height="25" rx="2.5" fill="#4261b9"/>
-<text x="425" y="167" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Mac orchestrator</text>
-<text x="414" y="202" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Plan + contracts + fresh dispatch</text>
-<text x="414" y="230" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Review + integrate + publish</text>
-<rect x="955" y="128" width="280" height="137" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
-<rect x="973" y="149" width="5" height="25" rx="2.5" fill="#8c68b3"/>
-<text x="990" y="170" fill="#172644" font-size="23" font-weight="650" text-anchor="start">GitHub</text>
-<text x="979" y="205" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Reviewed history</text>
-<text x="979" y="233" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Protected default branch</text>
-<rect x="390" y="280" width="500" height="38" rx="10" fill="#f8faff"/>
-<text x="640" y="304" fill="#4261b9" font-size="18" font-weight="600" text-anchor="middle">Verified SSH • bounded brief • ordinary account</text>
-<rect x="45" y="390" width="350" height="165" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
-<rect x="63" y="411" width="5" height="25" rx="2.5" fill="#208c80"/>
-<text x="80" y="432" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Mac worker 1</text>
-<text x="69" y="467" fill="#586985" font-size="18" font-weight="400" text-anchor="start">1..N independent CLI sessions</text>
-<text x="69" y="495" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Isolated checkouts + owned files</text>
-<text x="69" y="536" fill="#208c80" font-size="15" font-weight="600" text-anchor="start">Implement + test</text>
-<rect x="465" y="390" width="350" height="165" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
-<rect x="483" y="411" width="5" height="25" rx="2.5" fill="#208c80"/>
-<text x="500" y="432" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Mac worker 2</text>
-<text x="489" y="467" fill="#586985" font-size="18" font-weight="400" text-anchor="start">1..N independent CLI sessions</text>
-<text x="489" y="495" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Isolated checkouts + owned files</text>
-<text x="489" y="536" fill="#208c80" font-size="15" font-weight="600" text-anchor="start">Implement + test</text>
-<rect x="885" y="390" width="350" height="165" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
-<rect x="903" y="411" width="5" height="25" rx="2.5" fill="#208c80"/>
-<text x="920" y="432" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Linux ARM worker 3</text>
-<text x="909" y="467" fill="#586985" font-size="18" font-weight="400" text-anchor="start">1..N independent CLI sessions</text>
-<text x="909" y="495" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Isolated checkouts + owned files</text>
-<text x="909" y="536" fill="#208c80" font-size="15" font-weight="600" text-anchor="start">Implement + test</text>
-<text x="640" y="593" fill="#586985" font-size="18" font-weight="500" text-anchor="middle">Each worker returns changes, original logs, exit records, and closure evidence.</text>
-<rect x="390" y="655" width="500" height="100" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
-<rect x="408" y="676" width="5" height="25" rx="2.5" fill="#8c68b3"/>
-<text x="425" y="697" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Optional test targets</text>
-<text x="414" y="732" fill="#586985" font-size="18" font-weight="400" text-anchor="start">VM • GPU • service • device</text>
-<text x="55" y="680" fill="#8c68b3" font-size="18" font-weight="600" text-anchor="start">Serial resource gate</text>
-<text x="55" y="697" fill="#586985" font-size="16" font-weight="400" text-anchor="start">Explicit owner + authorization</text>
-<text x="45" y="786" fill="#586985" font-size="16" font-weight="400" text-anchor="start">CodexTandem is an operating method; host discovery and dispatch do not happen automatically.</text>
+<text x="45" y="56" fill="#172644" font-size="32" font-weight="700" text-anchor="start">Capable workers by default. Expert advice when needed.</text>
+<text x="45" y="89" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Keep routine work with lower-cost models that meet the task; reserve premium reasoning for difficult decisions.</text>
+<path d="M 450 218 L 335 218" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="393" y="200" fill="#586985" font-size="15" font-weight="500" text-anchor="middle">publish</text>
+<path d="M 900 203 L 1100 203" fill="none" stroke="#ad7420" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#advice-arrow)"/>
+<text x="1000" y="187" fill="#ad7420" font-size="16" font-weight="600" text-anchor="middle">brief + evidence</text>
+<path d="M 1100 280 L 900 280" fill="none" stroke="#ad7420" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#advice-arrow)"/>
+<text x="1000" y="266" fill="#ad7420" font-size="16" font-weight="600" text-anchor="middle">critique / diagnosis</text>
+<path d="M 675 320 L 675 560 L 250 560 L 250 630" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<path d="M 675 320 L 675 560 L 750 560 L 750 630" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<path d="M 675 320 L 675 560 L 1250 560 L 1250 630" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<path d="M 560 320 L 560 345 L 20 345 L 20 965 L 500 965" fill="none" stroke="#6f82a3" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="45" y="145" width="290" height="175" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
+<rect x="63" y="166" width="5" height="25" rx="2.5" fill="#8c68b3"/>
+<text x="80" y="187" fill="#172644" font-size="23" font-weight="650" text-anchor="start">GitHub</text>
+<text x="69" y="223" fill="#586985" font-size="16" font-weight="400" text-anchor="start">Reviewed project history</text>
+<text x="69" y="251" fill="#586985" font-size="16" font-weight="400" text-anchor="start">Required review / merge gate</text>
+<rect x="450" y="145" width="450" height="175" rx="16" fill="#eaf0ff" stroke="#4261b9" stroke-width="1.6"/>
+<rect x="468" y="166" width="5" height="25" rx="2.5" fill="#4261b9"/>
+<text x="485" y="187" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Mac orchestrator</text>
+<text x="474" y="223" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Plan + contracts + dispatch</text>
+<text x="474" y="251" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Verify advice + own every decision</text>
+<text x="474" y="279" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Review + integrate + publish</text>
+<rect x="1100" y="145" width="355" height="175" rx="16" fill="#fff3db" stroke="#ad7420" stroke-width="1.6"/>
+<rect x="1118" y="166" width="5" height="25" rx="2.5" fill="#ad7420"/>
+<text x="1135" y="187" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Optional advisor</text>
+<text x="1124" y="223" fill="#586985" font-size="17" font-weight="400" text-anchor="start">Example: Claude Fable 5.2</text>
+<text x="1124" y="251" fill="#586985" font-size="17" font-weight="400" text-anchor="start">Read files; return written advice</text>
+<text x="1124" y="279" fill="#586985" font-size="17" font-weight="400" text-anchor="start">No edits, dispatch, or integration</text>
+<rect x="1100" y="370" width="355" height="150" rx="16" fill="#fff3db" stroke="#ad7420" stroke-width="1.6"/>
+<rect x="1118" y="391" width="5" height="25" rx="2.5" fill="#ad7420"/>
+<text x="1135" y="412" fill="#172644" font-size="21" font-weight="650" text-anchor="start">Consult only for</text>
+<text x="1124" y="448" fill="#586985" font-size="16" font-weight="400" text-anchor="start">User-requested plan review, OR</text>
+<text x="1124" y="476" fill="#586985" font-size="16" font-weight="400" text-anchor="start">worker AND orchestrator stuck</text>
+<text x="1124" y="504" fill="#586985" font-size="16" font-weight="400" text-anchor="start">after examining the evidence</text>
+<rect x="480.9" y="368" width="388.2" height="28" rx="4" fill="#f8faff"/>
+<text x="675" y="390" fill="#4261b9" font-size="19" font-weight="600" text-anchor="middle">Verified SSH + fresh bounded brief</text>
+<rect x="400.5" y="402" width="549.0" height="25" rx="4" fill="#f8faff"/>
+<text x="675" y="421" fill="#586985" font-size="16" font-weight="400" text-anchor="middle">Changes, original logs, exits, and closure evidence return</text>
+<rect x="45" y="630" width="410" height="165" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="63" y="651" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="80" y="672" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Mac worker 1</text>
+<text x="69" y="708" fill="#586985" font-size="17" font-weight="400" text-anchor="start">1..N independent Codex CLI sessions</text>
+<text x="69" y="736" fill="#586985" font-size="17" font-weight="400" text-anchor="start">Isolated checkouts + owned files</text>
+<text x="69" y="764" fill="#586985" font-size="17" font-weight="400" text-anchor="start">Implement + test; report blockers</text>
+<rect x="545" y="630" width="410" height="165" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="563" y="651" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="580" y="672" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Mac worker 2</text>
+<text x="569" y="708" fill="#586985" font-size="17" font-weight="400" text-anchor="start">1..N independent Codex CLI sessions</text>
+<text x="569" y="736" fill="#586985" font-size="17" font-weight="400" text-anchor="start">Isolated checkouts + owned files</text>
+<text x="569" y="764" fill="#586985" font-size="17" font-weight="400" text-anchor="start">Implement + test; report blockers</text>
+<rect x="1045" y="630" width="410" height="165" rx="16" fill="#e9f7f4" stroke="#208c80" stroke-width="1.6"/>
+<rect x="1063" y="651" width="5" height="25" rx="2.5" fill="#208c80"/>
+<text x="1080" y="672" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Linux ARM worker 3</text>
+<text x="1069" y="708" fill="#586985" font-size="17" font-weight="400" text-anchor="start">1..N independent Codex CLI sessions</text>
+<text x="1069" y="736" fill="#586985" font-size="17" font-weight="400" text-anchor="start">Isolated checkouts + owned files</text>
+<text x="1069" y="764" fill="#586985" font-size="17" font-weight="400" text-anchor="start">Implement + test; report blockers</text>
+<text x="750" y="839" fill="#208c80" font-size="18" font-weight="600" text-anchor="middle">Workers report to the orchestrator. They never contact or delegate to the advisor directly.</text>
+<rect x="500" y="905" width="500" height="120" rx="16" fill="#f3edfb" stroke="#8c68b3" stroke-width="1.6"/>
+<rect x="518" y="926" width="5" height="25" rx="2.5" fill="#8c68b3"/>
+<text x="535" y="947" fill="#172644" font-size="23" font-weight="650" text-anchor="start">Optional test targets</text>
+<text x="524" y="983" fill="#586985" font-size="18" font-weight="400" text-anchor="start">VM • GPU • service • device</text>
+<text x="524" y="1011" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Explicit owner + authorization</text>
+<text x="70" y="940" fill="#8c68b3" font-size="18" font-weight="600" text-anchor="start">Serial resource gate</text>
+<text x="70" y="987" fill="#586985" font-size="16" font-weight="400" text-anchor="start">Only the orchestrator assigns access.</text>
+<text x="45" y="1088" fill="#586985" font-size="18" font-weight="400" text-anchor="start">Advisor disabled? The original workflow still works. No advisor result is required for routine work.</text>
 </g>
 </svg>

@@ -1,19 +1,35 @@
-sequenceDiagram
-  participant O as Orchestrator
-  participant W as Worker session
-  participant I as Integration / test target
-  participant G as GitHub
-  O->>O: Contract, base SHA, ownership, acceptance
-  O->>W: Verified SSH + fresh bounded brief
-  W->>W: Implement and test in isolated checkout
-  Note over W: Close paid session on completion or dependency wait
-  W-->>O: Diff/bundle SHA + small receipt + original logs
-  O->>O: Review native/wrapper/outer exits and logs
-  O->>O: Verify exact host/process group absence and diff
-  alt More useful work is needed
-    O->>W: New session with contract + work delta + outcomes
-    W-->>O: Reviewed follow-up artifact and closure evidence
+flowchart TB
+  subgraph NORMAL[Default delivery path]
+    P[Plan contract<br/>Base SHA · ownership · acceptance]
+    D[Dispatch a fresh bounded brief<br/>Selected capable worker · verified SSH]
+    W[Worker implements and tests<br/>Lower-cost model when it meets the task]
+    C[Close paid session on completion or wait<br/>Return artifact, receipt, and original logs]
+    R[Orchestrator reviews and investigates<br/>Diff · logs · exits · process closure]
+    I[Serial integration and acceptance<br/>Publish after required review and merge gate]
+    P -->|After any requested review| D
+    D --> W --> C --> R
+    R -->|Required checks pass| I
+    R -->|Resolvable fixes: fresh bounded brief| D
   end
-  O->>I: Serial integration and authorized acceptance
-  I-->>O: Combined checks and truthful evidence labels
-  O->>G: Publish after required review and merge gate
+  subgraph OPTIONAL[Optional expert advice]
+    A[Read-only advisor<br/>Example: Fable 5.2<br/>Critique or diagnose from files and evidence]
+    V[Orchestrator validates the advice<br/>ACCEPT · REJECT · DEFER each claim<br/>Revise plan or bounded worker brief]
+    U[No answer or LIMIT_REACHED<br/>Report actual reason; ask the user]
+    X{User choice}
+    A -.->|Written response| V
+    A -.->|Unavailable| U
+    U --> X
+    X -.->|Add credits or wait; retry when resolved| A
+  end
+  P -.->|Trigger A: user explicitly requests plan review| A
+  R -.->|Trigger B: worker AND orchestrator cannot solve or find an approach| A
+  V -.->|Orchestrator sends the next brief| D
+  X -.->|Continue without the requested review| D
+  classDef root fill:#eaf0ff,stroke:#4261b9,color:#172644
+  classDef worker fill:#e9f7f4,stroke:#208c80,color:#153e39
+  classDef advisor fill:#fff3db,stroke:#ad7420,color:#63430f
+  classDef gate fill:#f3edfb,stroke:#8c68b3,color:#423050
+  class P,D,R,V root
+  class W,C worker
+  class A advisor
+  class I,U,X gate

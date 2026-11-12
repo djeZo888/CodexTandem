@@ -4,8 +4,10 @@ flowchart LR
   A[Worker 1<br/>Owns API files + tests<br/>Isolated checkout A]
   B[Worker 2<br/>Owns UI files + tests<br/>Isolated checkout B]
   D[Worker 3<br/>Owns adapter files + tests<br/>Isolated checkout C]
-  R[Orchestrator review gate<br/>Diff + logs + exits<br/>Verified process closure]
+  R[Orchestrator review gate<br/>Diff + logs + exits<br/>Verified process closure<br/>Orchestrator decides]
   I[Serial integration<br/>Shared checkout · default branch<br/>GPU · VM · service · device gate]
+  E[Optional advisor · e.g. Fable 5.2<br/>Read-only; owns no files or resources<br/>No edits, dispatch, or integration]
+  T[User requests plan review<br/>OR worker AND orchestrator cannot solve]
   N -.-> A
   N -.-> B
   N -.-> D
@@ -16,9 +18,14 @@ flowchart LR
   B --> R
   D --> R
   R --> I
-  classDef root fill:#e6eefc,stroke:#4261b9,color:#152444
-  classDef worker fill:#e7f6f3,stroke:#208c80,color:#153e39
-  classDef gate fill:#f5effd,stroke:#8c68b3,color:#423050
-  class C root
+  R -.->|Focused brief + evidence| E
+  E -.->|Advice to verify; never direct worker instructions| R
+  T -.- E
+  classDef root fill:#eaf0ff,stroke:#4261b9,color:#172644
+  classDef worker fill:#e9f7f4,stroke:#208c80,color:#153e39
+  classDef gate fill:#f3edfb,stroke:#8c68b3,color:#423050
+  classDef advisor fill:#fff3db,stroke:#ad7420,color:#63430f
+  class C,R root
   class A,B,D worker
-  class R,I gate
+  class I gate
+  class E,T advisor

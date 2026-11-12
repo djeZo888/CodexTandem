@@ -56,6 +56,12 @@ Record the user's exact model and reasoning selection in the task. Resolve its e
 
 If the exact selection is unavailable, report that constraint and leave the task undispatched until the user chooses an alternative. Model availability and CLI configuration can differ across hosts. Repeat this check after a CLI or provider change.
 
+### Optional premium advisor
+
+The orchestrator can also call a separately authenticated, highly capable advisor such as Claude Fable 5.2. Install its client and user-level wrapper on the orchestrator machine once, then invoke it from individual project checkouts. The model runs at the provider; installing the CLI does not install model weights locally. Workers need neither the advisor login nor its account credentials.
+
+This upgrade is optional. Enable it for an explicit user-requested plan review, or when a worker and the orchestrator both cannot solve a problem after examining the evidence. The orchestrator keeps every decision and implementation assignment. Follow [Advisor setup and validation](ADVISOR.md) for the reference files, human login, account spending controls, read-only limitations, and live acceptance checks.
+
 ## 5. Isolate the task workspace
 
 Use a separate clone or worktree per task, rooted at the approved base commit. A worktree shares its repository's Git storage, so serialize operations that touch shared Git state. A separate clone is useful when independent Git operations or long-lived tasks make that simpler.
